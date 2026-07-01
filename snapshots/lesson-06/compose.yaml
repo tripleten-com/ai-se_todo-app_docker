@@ -1,0 +1,19 @@
+services:
+  mongo:
+    image: mongo:7
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build: ./server
+    ports:
+      - "3001:3001"
+    environment:
+      MONGO_URI: ${MONGO_URI}
+    depends_on:
+      - mongo
+
+  frontend:
+    build: ./client
+    ports:
+      - "5173:80"
